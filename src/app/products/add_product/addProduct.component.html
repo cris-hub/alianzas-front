@@ -1,0 +1,36 @@
+<div id="form-add-product" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Agregar producto</h5>
+        <form novalidate #formAddProduct="ngForm">
+            <div class="form-group">
+                <label for="name-product">Nombre*</label>
+                <input type="text" name="name-product" class="form-control" #name="ngModel" [(ngModel)]="product.name" required AppProductNameExist="" [ngModelOptions]="{updateOn: 'blur'}">
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Nombre requerido
+                    </div>
+                    <div *ngIf="name.errors.AppProductNameExist">
+                        Este producto ya existe
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="type-alliance">Tipo*</label>
+                <select class="form-control" id="type-alliance" name="type-alliance" [(ngModel)]="product.typId" #type="ngModel"
+                    required>
+                    <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
+                </select>
+                <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger">
+                    <div *ngIf="type.errors.required">
+                        Tipo requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="state-product" name="state-product" #state="ngModel" [(ngModel)]="product.state"> Activo</label>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitFormAddProduct()" [disabled]="formAddProduct.invalid">Agregar</button>
+        </form>
+    </div>
+</div>

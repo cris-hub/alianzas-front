@@ -1,0 +1,21 @@
+<div id="form-update-agreement" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Actualizar convenio</h5>
+        <form novalidate #formUpdateAgreement="ngForm">
+            <div class="form-group">
+                <label for="name-agreement">Nombre*</label>
+                <input type="text" name="name-agreement" class="form-control" #name="ngModel" [(ngModel)]="agreement.name" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Nombre requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="state-agreement" name="state-agreement" #state="ngModel" [(ngModel)]="agreement.state"> Activo</label>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitFormUpdateAgreement()" [disabled]="formUpdateAgreement.invalid">Actualizar</button>
+        </form>
+    </div>
+</div>

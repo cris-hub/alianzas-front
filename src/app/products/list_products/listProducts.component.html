@@ -1,0 +1,59 @@
+<div id="form-product-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchProducts="ngForm" novalidate name="form-search-products">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="product">Producto</label>
+                        <input type="text" class="form-control" id="product" name="product" [(ngModel)]="productName" >
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="product-state">Estado</label>
+                    <select class="form-control" name="product-state" [(ngModel)]="productState">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchProducts()"
+                [disabled]="formSearchProducts.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-products" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalProducts < 1">No hay resultados</div>
+        <br>
+        <a routerLink="/productos/agregar" class="actions-link create-link">
+            <i class="fa fa-plus-circle"></i> Registrar producto
+        </a>
+        <div class="table-responsive" *ngIf="totalProducts > 0">
+            <table class="table">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of productsReport.productList">
+                        <td>{{product.name}}</td>
+                        <td>{{product.state ? 'Activo' : 'Inactivo'}}</td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/productos/actualizar', product.id]">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="productsReport.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

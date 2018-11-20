@@ -1,0 +1,8 @@
+version: '3.5'
+services:
+  container_alianzas_front:
+    container_name: alianzas-front
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+        

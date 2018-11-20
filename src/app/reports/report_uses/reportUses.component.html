@@ -1,0 +1,91 @@
+<div id="form-report-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchUses="ngForm" novalidate name="form-search-uses">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="start-date">Fecha desde:</label>
+                        <input type="text" class="form-control" ngbDatepicker #startDatePicker="ngbDatepicker" id="start-date" name="start-date"
+                             [(ngModel)]="startDate" #startDateField="ngModel" required (click)="startDatePicker.toggle()">
+                        <div *ngIf="startDateField.invalid && (startDateField.dirty || startDateField.touched)" class="alert alert-danger">
+                            <div *ngIf="startDateField.errors.required">
+                                Fecha desde requerida
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="finished-date">Fecha hasta:</label>
+                        <input type="text" class="form-control" ngbDatepicker #finishedDatePicker="ngbDatepicker" id="finished-date" name="finished-date"
+                        [(ngModel)]="finishedDate"  #finishedDateField="ngModel" required (click)="finishedDatePicker.toggle()">
+                        <div *ngIf="finishedDateField.invalid && (finishedDateField.dirty || finishedDateField.touched)" class="alert alert-danger">
+                            <div *ngIf="finishedDateField.errors.required">
+                                Fecha hasta requerida
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="product-type">Categoria alianza</label>
+                        <select class="form-control" id="category-alliance" name="category-alliance" [(ngModel)]="category" (change) = "getAlliances('','',categoryField.value)" #categoryField="ngModel">
+                            <option value="">-- Seleccione una opción --</option>
+                            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="dropdown-list-alliances">Alianzas</label>
+                        <ng-multiselect-dropdown placeholder="-- Seleccione --" [data]="alliances" [(ngModel)]="selectedItemsAlliances" [settings]="dropdownSettingsAlliances"
+                            name="dropdown-list-alliances">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchUses()"
+                [disabled]="formSearchUses.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-report-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalUses < 1">No hay resultados</div>
+        <div class="table-responsive" *ngIf="totalUses > 0">
+            <table class="table table-sm">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nit</th>
+                        <th>Empresa</th>
+                        <th>Afiliado tipo Doc</th>
+                        <th>Afiliado documento</th>
+                        <th>Beneficiario tipo Doc</th>
+                        <th>Beneficiario documento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reportUse of reportUses.usesList">
+                        <td>{{reportUse.createdAt}}</td>
+                        <td>{{reportUse.nitCompany}}</td>
+                        <td>{{reportUse.businessName}}</td>
+                        <td>{{reportUse.docTypeAffiliate}}</td>
+                        <td>{{reportUse.docNumAffiliate}}</td>
+                        <td>{{reportUse.docTypeBeneficiary}}</td>
+                        <td>{{reportUse.docNumBeneficiary}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="reportUses.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+            <a class="actions-link create-link" (click)="getUsesExcel()">
+                <i class="fa fa-file-excel-o"></i> Exportar excel
+            </a>
+        </div>
+    </div>
+</div>

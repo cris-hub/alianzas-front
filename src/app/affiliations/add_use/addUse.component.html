@@ -1,0 +1,124 @@
+<form novalidate #formUse="ngForm">
+    <div id="info-use" class="card block-content">
+        <div class="card-body">
+            <div class="container">
+                <h5 class="card-title">Información afiliado</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Nombre:</b> {{use.nameAffiliate}}
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Tipo de documento</b> {{use.docTypeAffiliate}}
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Número del documento: </b> {{use.docNumAffiliate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-beneficiary-use" class="card block-content" *ngIf="use.docNumAffiliate != use.docNumBeneficiary">
+        <div class="card-body">
+            <div class="container">
+                <h5 class="card-title">Información beneficiario</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Nombre:</b> {{use.nameBeneficiary}}
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Tipo de documento</b> {{use.docTypeBeneficiary}}
+                    </div>
+                    <div class="col-sm-4">
+                        <b>Número del documento: </b> {{use.docNumBeneficiary}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form-use" class="card block-content">
+        <div class="card-body">
+            <h5 class="card-title">Registrar uso</h5>
+            <div class="form-group">
+                <label for="product-id">Producto *</label>
+                <select class="form-control" id="product-id" name="product-id" ngModel #productId="ngModel" [(ngModel)]="use.productId">
+                    <option value="">-- Seleccione una opción --</option>
+                    <option *ngFor="let product of products" [value]="product.id">{{product.name}}</option>
+                </select>
+                <div *ngIf="productId.invalid && (productId.dirty || productId.touched)" class="alert alert-danger">
+                    <div *ngIf="productId.errors.required">
+                        Producto requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description-use">Descripción</label>
+                <textarea name="description-use" class="form-control" #description="ngModel" [(ngModel)]="use.description" maxlength="100"></textarea> 
+                Máximo 100 caracteres
+            </div>
+            <div class="form-group">
+                <label for="quantity">Cantidad *</label>
+                <input type="text" name="quantity" class="form-control" #quantity="ngModel" [(ngModel)]="use.quantity" required pattern="[0-9]+"
+                    (change)='calculateTotalValue()' ngbTooltip="Hace referencia a la cantidad de noches o cantidad de pasaportes">
+                <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="alert alert-danger">
+                    <div *ngIf="quantity.errors.required">
+                        Cantidad requerida
+                    </div>
+                    <div *ngIf="quantity.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="product-unit-value">Valor unidad*</label>
+                <input type="text" name="product-unit-value" class="form-control" #productUnitValue="ngModel" [(ngModel)]="use.productUnitValue"
+                    required pattern="[0-9]+" (change)='calculateTotalValue()'>
+                <div *ngIf="productUnitValue.invalid && (productUnitValue.dirty || productUnitValue.touched)" class="alert alert-danger">
+                    <div *ngIf="productUnitValue.errors.required">
+                        Valor unidad es requerido
+                    </div>
+                    <div *ngIf="productUnitValue.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="total-value">Valor Total*</label>
+                <input type="text" name="total-value" class="form-control" #totalValue="ngModel" [(ngModel)]="use.totalValue" required pattern="[0-9]+"
+                    (change)='calculateDiscountValue()' disabled>
+                <div *ngIf="totalValue.invalid && (totalValue.dirty || totalValue.touched)" class="alert alert-danger">
+                    <div *ngIf="totalValue.errors.required">
+                        Valor total es requerido
+                    </div>
+                    <div *ngIf="productUnitValue.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="paid-value">Valor pagado*</label>
+                <input type="text" name="paid-value" class="form-control" #paidValue="ngModel" [(ngModel)]="use.paidValue" required pattern="[0-9]+"
+                    (change)='calculateDiscountValue()'>
+                <div *ngIf="paidValue.invalid && (paidValue.dirty || paidValue.touched)" class="alert alert-danger">
+                    <div *ngIf="paidValue.errors.required">
+                        Valor pagado requerido
+                    </div>
+                    <div *ngIf="paidValue.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="discount-value">Valor descuento *</label>
+                <input type="text" name="discount-value" class="form-control" #discountValue="ngModel" [(ngModel)]="use.discountValue" required
+                    disabled>
+                <div *ngIf="discountValue.invalid && (discountValue.dirty || discountValue.touched)" class="alert alert-danger">
+                    <div *ngIf="discountValue.errors.required">
+                        Descuento requerido
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" [disabled]="formUse.invalid" (click)="submitFormUse()">Guardar</button>
+        </div>
+    </div>
+</form>

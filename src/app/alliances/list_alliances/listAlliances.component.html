@@ -1,0 +1,66 @@
+<div id="form-alliance-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchAlliances="ngForm" novalidate name="form-search-alliances">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="alliance">Alianza</label>
+                        <input type="text" class="form-control" id="alliance" name="alliance" [(ngModel)]="alliancesName">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="alliance-state">Estado</label>
+                    <select class="form-control" name="alliance-state" [(ngModel)]="alliancesState">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchAlliances()"
+                [disabled]="formSearchAlliances.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-alliances" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalAlliances < 1">No hay resultados</div>
+        <a routerLink="/alianzas/agregar" class="actions-link create-link">
+            <i class="fa fa-plus-circle"></i> Registrar Alianza
+        </a>
+        <div class="table-responsive" *ngIf="totalAlliances > 0">
+            <table class="table">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Alianza</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let alliance of alliancesReport.alliancesList">
+                        <td>{{alliance.name}}</td>
+                        <td>{{alliance.description}}</td>
+                        <td>{{alliance.state ? 'Activo' : 'Inactivo'}}</td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/alianzas/actualizar', alliance.id]">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/productos/alianzas/alianza', alliance.id]">
+                                <i class="fa fa-edit"></i> Asociar Productos
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="alliancesReport.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

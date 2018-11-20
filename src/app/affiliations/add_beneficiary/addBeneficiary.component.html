@@ -1,0 +1,56 @@
+<div id="result-report-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Registrar beneficiario</h5>
+        <form novalidate #formAddBeneficiary="ngForm">
+            <div class="form-group">
+                <label for="name-beneficiarie">Nombre *</label>
+                <input type="text" name="name-beneficiary" placeholder="APELLIDOS Y NOMBRES" class="form-control" #name="ngModel" [(ngModel)]="beneficiary.name" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Nombre requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="type-document-beneficiary">Tipo documento *</label>
+                <select class="form-control" name="type-document-beneficiary" #docType="ngModel" [(ngModel)]="beneficiary.docType" required>
+                    <option *ngFor="let typeDocument of typeDocuments" [value]="typeDocument.typeDocument">{{typeDocument.nameDocument}}</option>
+                </select>
+                <div *ngIf="docType.invalid && (docType.dirty || docType.touched)" class="alert alert-danger">
+                    <div *ngIf="docType.errors.required">
+                        Tipo de documento requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="doc-beneficiarie">Documento *</label>
+                <input type="text" name="doc-beneficiarie" class="form-control" #docNum="ngModel" [(ngModel)]="beneficiary.docNum" required
+                    pattern="[0-9]+">
+                <div *ngIf="docNum.invalid && (docNum.dirty || docNum.touched)" class="alert alert-danger">
+                    <div *ngIf="docNum.errors.required">
+                        Documento requerido
+                    </div>
+                    <div *ngIf="docNum.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="relationship-beneficiarie">Parentesco *</label>
+                <select class="form-control" name="relationship-beneficiary" #relationship="ngModel" [(ngModel)]="beneficiary.relationship"
+                    required>
+                    <option value="Hijo">Hijo</option>
+                    <option value="Cónyuge">Cónyuge</option>
+                    <option value="Hermano">Hermano</option>
+                    <option value="Padre">Padre</option>
+                </select>
+                <div *ngIf="relationship.invalid && (relationship.dirty || relationship.touched)" class="alert alert-danger">
+                    <div *ngIf="relationship.errors.required">
+                        Parentesco requerido
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitFormAddBeneficiary()" [disabled]="formAddBeneficiary.invalid">Agregar</button>
+        </form>
+    </div>
+</div>

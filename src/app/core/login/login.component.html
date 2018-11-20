@@ -1,0 +1,28 @@
+<div class="card block-content">
+    <div class="card-body">
+        <h4 class="card-title">Iniciar sesión</h4>
+        <form #loginForm="ngForm" novalidate>
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" #username=ngModel ngModel class="form-control" name="username" required>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                    <div *ngIf="username.errors.required">El usuario es requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" #password=ngModel ngModel name="password" class="form-control" required>
+                <a routerLink="/user/reset/password">Recuperar contraseña</a>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                    <div *ngIf="password.errors.required">La contraseña es requerida</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <recaptcha [(ngModel)]="loginRecaptcha" id="loginRecaptcha" name="loginRecaptcha" (scriptLoad)="onScriptLoad()" (scriptError)="onScriptError()"></recaptcha>
+            </div>
+            <div class="form-group">
+                <button [disabled]="!loginForm.valid" class="btn btn-primary" (click)="submitLogin(this.username.value, this.password.value)">Iniciar sesión</button>
+            </div>
+        </form>
+    </div>
+</div>

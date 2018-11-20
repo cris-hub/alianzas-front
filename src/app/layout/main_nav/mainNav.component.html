@@ -1,0 +1,65 @@
+<div>
+    <div *ngIf="_ss.isAuthenticated()" class="sidebar-header">
+        <i class="fa fa-user-circle"></i>
+        <span class="info-user"> {{user.name}} </span>
+    </div>
+</div>
+<nav class="menu">
+    <ul>
+        <li *ngIf="!_ss.isAuthenticated()">
+            <a routerLink="/login" class="desktop">
+                <i class="fa fa-sign-in"></i>Iniciar sesión</a>
+            <a routerLink="/login" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-sign-in"></i>Iniciar sesión</a>
+        </li>
+        <li>
+            <a routerLink="/nosotros" class="desktop">
+                <i class="fa fa-book"></i> Nosotros</a>
+            <a routerLink="/nosotros" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-book"></i> Nosotros</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && (user.role == 3 || user.role == 1)">
+            <a routerLink="/afiliaciones/consulta-afiliado" class="desktop">
+                <i class="fa fa-search"></i> Consulta afiliado</a>
+            <a routerLink="/afiliaciones/consulta-afiliado" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-search"></i> Consulta afiliado</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && (user.role == 2 || user.role == 1)">
+            <a routerLink="/reportes/usos" class="desktop">
+                <i class="fa fa-table"></i> Reportes</a>
+            <a routerLink="/reportes/usos" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-table"></i> Reportes</a>
+
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && user.role == 1">
+            <a routerLink="/usuarios/listar" class="desktop">
+                <i class="fa fa-user"></i> Administrar Usuarios</a>
+            <a routerLink="/usuarios/listar" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-user"></i> Administrar Usuarios</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && user.role == 1">
+            <a routerLink="/productos/listar" class="desktop">
+                <i class="fa fa-product-hunt"></i> Administrar Productos</a>
+            <a routerLink="/productos/listar" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-product-hunt"></i> Administrar Productos</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && user.role == 1">
+            <a routerLink="/alianzas/listar" class="desktop">
+                <i class="fa fa-users"></i> Administrar Alianzas</a>
+            <a routerLink="/alianzas/listar" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-users"></i> Administrar Alianzas</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && user.role == 1">
+            <a routerLink="/convenios/listar" class="desktop">
+                <i class="fa fa-handshake-o"></i> Administrar Convenios</a>
+            <a routerLink="/convenios/listar" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-handshake-o"></i> Administrar Convenios</a>
+        </li>
+        <li *ngIf="_ss.isAuthenticated() && user.role == 1">
+            <a routerLink="/tipificacion/listar" class="desktop">
+                <i class="fa fa-list"></i> Administrar tipificación</a>
+            <a routerLink="/tipificacion/listar" (click)="switchSideBar()" class="mobile">
+                <i class="fa fa-list"></i> Administrar tipificación</a>
+        </li>
+    </ul>
+</nav>

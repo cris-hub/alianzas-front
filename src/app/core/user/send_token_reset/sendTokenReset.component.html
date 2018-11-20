@@ -1,0 +1,18 @@
+<div class="card block-content">
+    <div class="card-body">
+        <h4 class="card-title">Restaurar contraseña</h4>
+        <form #userValidateForm="ngForm" novalidate>
+            <div class="form-group">
+                <p>Un mensaje de texto sera enviado al numero celular registrado a la cuenta</p>
+                <label for="username">Ingrese su nombre de usuario: </label>
+                <input type="username" #username=ngModel ngModel name="username" class="form-control" required>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                    <div *ngIf="username.errors.required">El nombre de usuario es requerido</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="!userValidateForm.valid" class="btn btn-primary" (click)="sendUserToken(this.username.value)">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>

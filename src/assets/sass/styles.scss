@@ -1,0 +1,255 @@
+/* You can add global styles to this file, and also import other style files */
+a{
+    cursor: pointer;
+}
+h1, h2, h3, h4, h5, h6{
+    color: #4f5f6f;
+}
+body{
+    margin: 0;
+    font-size: 13px;
+    background-color: #f0f3f6;
+    color: #4f5f6f;
+}
+header{
+    background: #002157;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    .logo{
+        max-width: 15em;
+    }
+    .session-out{
+        color: #ffffff;
+        font-size: 16px;
+        a{
+            cursor: pointer;
+        }
+    }
+    .btn-open-sidenav{
+        display: none;
+        font-size: 26px;
+        color: white;
+        cursor: pointer;
+    }
+}
+aside.sidebar{
+    display: block;
+    position: fixed;
+    background: #222D32;
+    z-index: 10;
+    color: #fff;
+    padding: 0;
+    .sidebar-header{
+        position: relative;
+        padding: 0 0 0 56px;
+        margin: 15px 0;
+        height: 50px;
+        border-bottom: 2px solid #fff;
+        i{
+            font-size: 40px;
+            position: absolute;
+            top: 0;
+            left: 10px;
+        }
+        .info-user{
+            font-size: 12px;
+        }
+    }
+
+    nav{
+        ul{
+            list-style-type:none;
+            padding: 0 10px;
+            font-size: 14px;
+            li{
+                padding: 10px 0;
+                a{
+                    color: #fff;
+                    i{
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+#main{
+    width: 100%;
+}
+#content{
+    width: 95%;
+    margin: 1em auto;
+}
+#content-page{
+    padding-top: 74px;
+}
+.block-content{
+    border: 0;
+    border-radius: 0;
+    box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+    -webkit-box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+}
+textarea{
+    width: 100%;
+}
+.create-link{
+    padding: 10px 0;
+    display: block;
+}
+.actions-link{
+    font-size: 14px;
+    i{
+        font-size: 20px;
+    }
+}
+
+//styles about-us
+.about-us{
+    h1,h2{
+        text-align: center;
+    } 
+}
+
+//Styles consult affiliates
+#info-affiliate{
+    margin-top: 1em;
+}
+#info-more-affiliate{
+    margin-top: 1em;
+}
+#form-use{
+    margin-top: 1em;
+}
+#info-beneficiary-use{
+    margin-top: 1em;
+}
+#affilation-actions{
+    text-align: center;
+    margin-top: 1em;
+}
+#add-affiliate{
+    display: inline-block;
+}
+
+//Styles reports
+#result-report-search{
+    margin-top: 1em;
+}
+
+//Styles Users admin
+#result-users{
+    margin-top: 1em;
+}
+#content-form-user-create{
+    margin-top: 1em;
+}
+#content-form-user-update{
+    margin-top: 1em;
+}
+
+//Styles Product admin
+#result-products{
+    margin-top: 1em;
+}
+
+//Styles alliances admin
+#result-alliances{
+    margin-top: 1em;
+}
+
+//Styles agreements 
+#result-agreements{
+    margin-top: 1em;
+}
+
+//Styles 
+#result-types{
+    margin-top: 1em;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .sidebar{
+        display: none;
+        .menu{
+            .mobile{
+                display: block;
+            }
+            .desktop{
+                display: none;
+            }
+        }
+    }
+    header{
+        .btn-open-sidenav{
+            display: block;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .sidebar{
+        display: none;
+        .menu{
+            .mobile{
+                display: block;
+            }
+            .desktop{
+                display: none;
+            }
+        }
+    }
+    header{
+        .btn-open-sidenav{
+            display: block;
+        }
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {  
+    .sidebar{
+        display: none;
+        .menu{
+            .mobile{
+                display: none;
+            }
+            .desktop{
+                display: block;
+            }
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    .sidebar{
+        display: none;
+        .menu{
+            .mobile{
+                display: none;
+            }
+            .desktop{
+                display: block;
+            }
+        }
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    .sidebar{
+        display: none;
+        .menu{
+            .mobile{
+                display: none;
+            }
+            .desktop{
+                display: block;
+            }
+        }
+    }
+}

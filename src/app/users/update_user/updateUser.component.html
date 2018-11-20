@@ -1,0 +1,82 @@
+<div id="content-form-user-update" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Actualizar usuario</h5>
+        <form novalidate #formUpdateUser="ngForm">
+            <div class="form-group">
+                <label for="user-email">Email *</label>
+                <input type="text" name="user-email" class="form-control" #email="ngModel" [(ngModel)]="user.email" required email AppUserEmailExist="{{user.id}}"
+                    [ngModelOptions]="{updateOn: 'blur'}">
+                    Este sera utilizado como nombre de usuario
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                        Email requerido
+                    </div>
+                    <div *ngIf="email.errors.AppUserEmailExist">
+                        El Email ya existe
+                    </div>
+                    <div *ngIf="email.errors.email">
+                        La dirección de email que proporcionaste no es válida.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name">Nombre *</label>
+                <input type="text" name="name" class="form-control" #name="ngModel" [(ngModel)]="user.name" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required">
+                        Nombre requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="user-phone">Celular *</label>
+                <input type="text" name="user-phone" class="form-control" #phone="ngModel" [(ngModel)]="user.phone" required pattern="[0-9]+"
+                    minlength="10">
+                    Este sera utilizado como primera contraseña
+                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
+                    <div *ngIf="phone.errors.required">
+                        Teléfono requerido
+                    </div>
+                    <div *ngIf="phone.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                    <div *ngIf="phone.errors.minlength">
+                        Mínimo 10 numeros
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="user-category">Rol *</label>
+                <select class="form-control" id="role-user" name="role-user" ngModel #roleUser="ngModel" [(ngModel)]="user.role" required>
+                    <option *ngFor="let role of roles" [ngValue]="role.id">{{role.name}}</option>
+                </select>
+                <div *ngIf="roleUser.invalid && (roleUser.dirty || roleUser.touched)" class="alert alert-danger">
+                    <div *ngIf="roleUser.errors.required">
+                        Role requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="user.role == 3">
+                <label for="alliance-user">Alianza *</label>
+                <select class="form-control" id="alliance-user" name="alliance-user" ngModel #allianceUser="ngModel" [(ngModel)]="user.alliance"
+                    required>
+                    <option *ngFor="let alliance of alliances" [ngValue]="alliance.id">{{alliance.name}}</option>
+                </select>
+                <div *ngIf="allianceUser.invalid && (allianceUser.dirty || allianceUser.touched)" class="alert alert-danger">
+                    <div *ngIf="allianceUser.errors.required">
+                        Alianza requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="changePassword-user" name="changePassword-user" #changePassword="ngModel" [(ngModel)]="user.changePassword"> Reestablecer contraseña </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="state-user" name="state-user" #state="ngModel" [(ngModel)]="user.enabled"> Activo</label>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitFormUpdateUser()" [disabled]="formUpdateUser.invalid">Actualizar</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div id="form-agreements-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchAgreements="ngForm" novalidate name="form-agreements">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="type">Convenio</label>
+                        <input type="text" class="form-control" id="agreement" name="agreement" [(ngModel)]="agreementName">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="agreement-state">Estado</label>
+                    <select class="form-control" name="agreement-state" [(ngModel)]="agreementState">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchAgreements()" [disabled]="formSearchAgreements.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-agreements" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalAgreements < 1">No hay resultados</div>
+        <br>
+        <a routerLink="/convenios/agregar" class="actions-link create-link">
+            <i class="fa fa-plus-circle"></i> Registrar convenio
+        </a>
+        <div class="table-responsive" *ngIf="totalAgreements > 0">
+            <table class="table">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Convenio</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let agreement of agreementsReport.agreementsList">
+                        <td>{{agreement.name}}</td>
+                        <td>{{agreement.state ? 'Activo' : 'Inactivo'}}</td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/convenios/actualizar', agreement.id]">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="agreementsReport.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

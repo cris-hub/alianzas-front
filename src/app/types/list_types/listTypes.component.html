@@ -1,0 +1,68 @@
+<div id="form-types-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchTypes="ngForm" novalidate name="form-types">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="type">Tipo</label>
+                        <input type="text" class="form-control" id="type" name="type" [(ngModel)]="typesName">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="type-state">Estado</label>
+                    <select class="form-control" name="type-state" [(ngModel)]="typesState">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="category-type">Categoría</label>
+                    <select class="form-control" id="category-type" name="category-type" [(ngModel)]="typesCategory">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchTypes()"
+                [disabled]="formSearchTypes.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-types" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalTypes < 1">No hay resultados</div>
+        <br>
+        <a routerLink="/tipificacion/agregar" class="actions-link create-link">
+            <i class="fa fa-plus-circle"></i> Registrar tipificación
+        </a>
+        <div class="table-responsive" *ngIf="totalTypes > 0">
+            <table class="table">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Categoria</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let type of typesReport.typesList">
+                        <td>{{type.name}}</td>
+                        <td>{{type.category}}</td>
+                        <td>{{type.state ? 'Activo' : 'Inactivo'}}</td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/tipificacion/actualizar', type.id]">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="typesReport.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

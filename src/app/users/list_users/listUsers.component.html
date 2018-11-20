@@ -1,0 +1,73 @@
+<div id="form-users-search" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Filtros</h5>
+        <form #formSearchUsers="ngForm" novalidate name="form-search-users">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="username">Nombre de usuario</label>
+                        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="name">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label for="user-state">Estado</label>
+                    <select class="form-control" name="user-state" [(ngModel)]="userState">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label for="user-role">Rol</label>
+                    <select class="form-control" id="user-role" name="user-role" [(ngModel)]="userRole">
+                        <option value="">-- Seleccione una opción --</option>
+                        <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="this.submitformSearchUsers()"
+                [disabled]="formSearchUsers.invalid">Buscar</button>
+        </form>
+    </div>
+</div>
+
+<div id="result-users" class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Resultados</h5>
+        <div *ngIf="totalUsers < 0">No hay resultados</div>
+        <a routerLink="/usuarios/agregar" class="actions-link create-link">
+            <i class="fa fa-plus-circle"></i> Registrar usuario
+        </a>
+        <div class="table-responsive" *ngIf="totalUsers > 0">
+            <table class="table">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Nombre de usuario</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of reportUsers.usersList">
+                        <td>{{user.username}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.enabled ? 'Activo' : 'Inactivo'}}</td>
+                        <td>
+                            <a class="actions-link" [routerLink]="['/usuarios/actualizar', user.id]">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="count" [collectionSize]="reportUsers.count" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

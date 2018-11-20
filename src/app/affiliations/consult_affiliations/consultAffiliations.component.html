@@ -1,0 +1,133 @@
+<div class="card block-content">
+    <div class="card-body">
+        <h5 class="card-title">Buscar afiliado</h5>
+        <form #formSearch="ngForm" novalidate>
+            <div class="form-group">
+                <label for="type-document">Tipo de documento</label>
+                <select class="form-control" id="type-document" name="type-document" ngModel #typeDocument="ngModel" required>
+                    <option *ngFor="let typeDocument of typeDocuments" [value]="typeDocument.codeTypeDocument">{{typeDocument.nameDocument}}</option>
+                </select>
+                <div *ngIf="typeDocument.invalid && (typeDocument.dirty || typeDocument.touched)" class="alert alert-danger">
+                    <div *ngIf="typeDocument.errors.required">
+                        Tipo de documento requerido
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="document">Número del documento:</label>
+                <input type="text" class="form-control" id="document" name="document" ngModel #docNum="ngModel" required pattern="[0-9]+">
+                <div *ngIf="docNum.invalid && (docNum.dirty || docNum.touched)" class="alert alert-danger">
+                    <div *ngIf="docNum.errors.required">
+                        Numero de documento requerido
+                    </div>
+                    <div *ngIf="docNum.errors.pattern">
+                        Solo se permite numeros
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" (click)="this.submitFormSearch(typeDocument.value, docNum.value)" [disabled]="formSearch.invalid">Buscar</button>
+            </div>
+            <a id="add-affiliate" routerLink="/afiliaciones/agregar-afiliado" class="actions-link create-link" placement="top" ngbTooltip="Uso exclusivo colsubsidio">
+                <i class="fa fa-edit"></i> Usuario no afiliado
+            </a>
+        </form>
+    </div>
+</div>
+<div *ngIf="!affiliation">No se encontraron resultados</div>
+<div *ngIf="affiliation">
+    <div id="info-affiliate" class="card block-content">
+        <div class="card-body">
+            <h5 class="card-title">Información afiliado</h5>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <b>Nombre:</b>
+                        <br> {{affiliate.name}}
+                    </div>
+                    <div class="col-sm-2">
+                        <b>Categoria de afiliación:</b>
+                        <br> {{affiliate.category}}
+                    </div>
+                    <div class="col-sm-3">
+                        <b>Tipo de documento: </b>
+                        <br> {{affiliate.docType}}
+                    </div>
+                    <div class="col-sm-3">
+                        <b>Número documento: </b>
+                        <br> {{affiliate.docNum}}
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="radio" name="radio-beneficiaries" [(ngModel)]="docNumBeneficiary" value="{{affiliate.docNum}}" (change)='this.updateUseBeneficiary()'>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <b>Estado de la afiliación:</b>
+                        <br> {{affiliate.statusAffiliation}}
+                        <ng-container *ngIf="affiliate.statusAffiliation == RETIR"> ({{affiliate.retirementDate}}) </ng-container>
+                    </div>
+                    <div class="col-sm-3">
+                        <b>Tipo de Afiliado:</b>
+                        <br> {{affiliate.typeAffiliate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="benefits">
+        <div id="info-more-affiliate" class="card block-content">
+            <div class="card-body">
+                <h5 class="card-title">Beneficiarios</h5>
+                <div class="container">
+                    <div id="beneficiaries">
+                        <div *ngIf="!beneficiaries.length">
+                            No hay beneficiarios por el momento
+                        </div>
+                        <div>
+                            <a (click)='redirectCreateBeneficiary()' class="actions-link create-link">
+                                <i class="fa fa-plus-circle"></i> Registrar beneficiario
+                            </a>
+                        </div>
+                        <div class="table-responsive" *ngIf="beneficiaries.length">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Categoria de afiliación</th>
+                                        <th>Tipo de documento</th>
+                                        <th>Número documento</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let beneficiary of beneficiaries">
+                                        <td>{{beneficiary.name}}</td>
+                                        <td>{{affiliate.category}}</td>
+                                        <td>{{beneficiary.docType}}</td>
+                                        <td>{{beneficiary.docNum}}</td>
+                                        <td>
+                                            <input type="radio" name="radio-beneficiaries" [(ngModel)]="docNumBeneficiary" value="{{beneficiary.docNum}}" (change)='this.updateUseBeneficiary()'>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="affilation-actions" class="card block-content">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" (click)='sendUse()'>Registrar uso</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-success" (click)='generateCertificate()'><i class="fa fa-file" aria-hidden="true"></i> Generar certificado</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
