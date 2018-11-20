@@ -42,6 +42,7 @@ typings/
 # Optional npm cache directory
 .npm
 
+
 # Optional eslint cache
 .eslintcache
 
@@ -50,6 +51,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+*.tar
 
 # Yarn Integrity file
 .yarn-integrity
