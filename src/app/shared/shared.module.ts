@@ -1,5 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,10 +17,16 @@ import { CompareValidatorModule } from 'angular-compare-validator';
 import { MomentModule } from 'angular2-moment';
 import { NumberOnlyDirective } from './directives/onlyNumber.directive';
 import { RecaptchaModule } from 'angular-google-recaptcha';
+import { AppConfig } from '../app.config';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
+
+export function initConfig(config: AppConfig) {
+    return () => config.load();
+  }
+  
 @NgModule({
     imports: [
         CommonModule,
@@ -56,6 +62,7 @@ import { RecaptchaModule } from 'angular-google-recaptcha';
         CompareValidatorModule,
         MomentModule,
         RecaptchaModule
+       
     ]
 })
 export class SharedModule {
@@ -64,7 +71,15 @@ export class SharedModule {
             ngModule: SharedModule,
             providers: [
                 AllianceService,
-                ProductService
+                ProductService,
+                {provide: LocationStrategy, useClass: HashLocationStrategy},
+                AppConfig,
+                { 
+                  provide: APP_INITIALIZER,
+                  useFactory: initConfig,
+                  deps: [AppConfig],
+                  multi: true 
+                }
             ]
         };
     }

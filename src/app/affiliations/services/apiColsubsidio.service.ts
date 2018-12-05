@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpBackend, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
+import { AppConfig } from 'src/app/app.config';
 
 @Injectable()
 export class ApiColsubsidioService {
     private url;
 
-    constructor(private _http: HttpClient, handler: HttpBackend) {
+    constructor(private _http: HttpClient, handler: HttpBackend,private config : AppConfig) {
+        Object.assign(environment,this.config.getAllConfig);
         this.conectionConfig();
         this._http = new HttpClient(handler);
     }

@@ -11,12 +11,14 @@ import { Alliance } from '../../shared/models/alliance';
 import { Observable } from 'rxjs';
 import { Type } from '../../shared/models/type';
 import { Agreement } from '../../shared/models/agreement';
+import { AppConfig } from 'src/app/app.config';
 
 @Injectable()
 export class ApiAlliancesService {
     private url;
 
-    constructor(private _http: HttpClient, private _ss: SessionService) {
+    constructor(private _http: HttpClient, private _ss: SessionService,private config : AppConfig) {
+        Object.assign(environment,this.config.getAllConfig);
         this.conectionConfig();
     }
 
@@ -24,6 +26,7 @@ export class ApiAlliancesService {
      * @desc Config conection services
      */
     private conectionConfig(): void {
+        
         this.url = environment.apiAlliancesUrl;
     }
 

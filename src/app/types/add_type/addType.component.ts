@@ -9,7 +9,7 @@ import { SessionService } from '../../core/services/session.service';
 
 @Component({
     selector: 'app-form-type',
-    templateUrl: './addtype.component.html'
+    templateUrl: './addType.component.html'
 })
 
 export class AddTypeComponent {

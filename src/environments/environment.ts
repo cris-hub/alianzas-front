@@ -2,11 +2,11 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+export let environment = {
   production: false,
-  apiAlliancesUrl: "http://localhost:8080/",
-  apiGeeColsubsidioUrl: "https://colsubsidio-prod.apigee.net/api/",
-  apiKeyColsubsidio: "OBKuNkBdmgQMErBCkI0bvVCzO95H33MQ"
+  apiAlliancesUrl: "",
+  apiGeeColsubsidioUrl: "",
+  apiKeyColsubsidio: ""
 };
 
 /*

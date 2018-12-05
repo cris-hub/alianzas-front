@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { AppConfig } from 'src/app/app.config';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private url;
 
-    constructor(private _http: Http) {
+    constructor(private _http: Http,private config : AppConfig) {
+        Object.assign(environment,this.config.getAllConfig);
         this.conectionConfig();
     }
 
