@@ -1,24 +1,24 @@
-version: '3.5'
-services:
-  frontend_service:
-    container_name: alianzas-front
-    image: alianzas-front
-    ports:
-      - "8091:80"
-    build:
-      context: ./alianzas-front
+version: '3.5'  #version docker-compose
+services: #servicios a ser levantados, bajaados del reposito o subidos, imagenes y contenedores
+  frontend_service: # servicio front alianzas
+    container_name: alianzas-front #nombre del contendor al ser levandado
+    image: crishubprojects/alianzas-front:latest # imagen del servicio a ser descargada o creada
+    ports: # puertos a aser usados, a la izquierda el puerto publico y derecha puerto contenedor
+      - "8092:80"
+    build: # creacion de la imagen desde un archivo docker 
+      context: ./alianzas-front # carpeta en la que se encuentra el archivo docker
       dockerfile: ./Dockerfile
-    networks:
+    networks: # red a ser usada por el contendor
       - network
     volumes: 
       - v_front_dist:/usr/share/nginx/html/alianzas
       - v_front_logs:/var/log
       - v_front_config:/usr/share/nginx/html/alianzas/assets/config/
     restart: always
-volumes:
-  v_front_dist:
-  v_front_config:
-  v_front_logs:
-networks:
+volumes: # volumenes a ser creados
+  v_front_dist: # distribucion front 
+  v_front_config: # configuracion del front (enviroments)
+  v_front_logs: # log del contenedor
+networks: # network a ser creadas
   network:    
         
